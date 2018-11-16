@@ -1,0 +1,73 @@
+{
+  "project_info": {
+    "project_number": "440492933678",
+    "firebase_url": "https://dlxtv-99294.firebaseio.com",
+    "project_id": "dlxtv-99294",
+    "storage_bucket": "dlxtv-99294.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:440492933678:android:0e602e47de6befa1",
+        "android_client_info": {
+          "package_name": "com.dlxstudios.tv"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "440492933678-93cee0bmboaml4bhsn3atfvt59gh1nr9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDDBCXGpHKwKWiBBNSc-PN6tkuKj_3roPE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:440492933678:android:0472fd8d3b5164b9",
+        "android_client_info": {
+          "package_name": "com.dlxstudios.tv.dlxtv"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "440492933678-93cee0bmboaml4bhsn3atfvt59gh1nr9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDDBCXGpHKwKWiBBNSc-PN6tkuKj_3roPE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

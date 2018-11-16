@@ -1,0 +1,40 @@
+{
+  "title": "Haji",
+  "routes": [
+    {
+      "title": "Movies",
+      "path": "home",
+      "type": "MediaGrid",
+      "MediaGrid": {
+        "gridRatio": "0.676",
+        "itemsUrl": "http://api.themoviedb.org/3/movie/now_playing?api_key=130979ed329ff88f27bae32b141082fb",
+        "itemsSelector": "results",
+        "poster": "https://image.tmdb.org/t/p/original{poster_path}",
+        "title": "{title}"
+      }
+    },
+    {
+      "title": "SCloud",
+      "path": "homeSC",
+      "type": "MediaGrid",
+      "MediaGrid": {
+        "gridRatio": "01",
+        "itemsUrl": "https://api.soundcloud.com/tracks?client_id=7ce7c8ce794f080121b96a32aeff64f4",
+        "poster": "{artwork_url}",
+        "title": "{title}"
+      }
+    },
+    {
+      "title": "YTube",
+      "path": "homeYT",
+      "type": "MediaGrid",
+      "MediaGrid": {
+        "itemsSelector":"items",
+        "title":"{snippet.title}",
+        "poster": "https://img.youtube.com/vi/{snippet.resourceId.videoId}/3.jpg",
+        "gridRatio": "1",
+        "itemsUrl": "https://www.googleapis.com/youtube/v3/playlistItems?key=AIzaSyDDBCXGpHKwKWiBBNSc-PN6tkuKj_3roPE&part=snippet%2CcontentDetails&maxResults=25&playlistId=PL19ohT5PbRowHisVkffh8TsyyqRHpJvN6"
+      }
+    }
+  ]
+}
