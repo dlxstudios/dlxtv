@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:dlxtv/models/BuildPage.dart';
-// import 'package:dlxtv/pages/pageGrid.dart';
+
 
 import 'package:dlxtv/utils/theme.dart';
 
@@ -24,22 +24,20 @@ class AppModel {
     BuildPage _home;
 
     // Get the all the routes
-    Map<String, WidgetBuilder> _routes;
+    List menu = [];
     for (int i = 0; i < appJson["routes"].length; i++) {
-      BuildPage result = BuildPage.fromJson(context, appJson["routes"][i]);
-      Map<String, dynamic> route = appJson["routes"][i];
-      // BuildPageWidget result = BuildPageWidget(
-        // path: result.path,
-      // );
-      // _routes.update("/"+result.path,  BuildPageWidget());
-      // print('result.path');
-      // print(result.path);
-      // 'home' route
-      if (result.path == "home") {
+      BuildPage _page = BuildPage.fromJson(appJson["routes"][i]);
+      // Map<String, dynamic> route = appJson["routes"][i];
+      
+      if (_page.path == "home") {
         // print('Home Page');
-        // print(result.title);
-        _home = result;
+        // print(_page.title);
+        _home = _page;
       }
+
+      menu.add({"title": _page.title, "path": _page.path});
+
+
     }
 
     Widget list = ListView(
@@ -53,21 +51,8 @@ class AppModel {
             ),
           ),
         ),
-        ListTile(
-          leading: Icon(Icons.map),
-          title: Text('Map'),
-          onTap: () {
-            Navigator.of(context).pushNamed('/map');
-          },
-        ),
-        ListTile(
-          leading: Icon(Icons.photo_album),
-          title: Text('Album'),
-        ),
-        ListTile(
-          leading: Icon(Icons.phone),
-          title: Text('Phone'),
-        ),
+
+        
       ],
     );
 

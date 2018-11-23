@@ -1,0 +1,22 @@
+{
+  "title": "dlxTV",
+  "routes": [
+    {
+      "title": "YTube",
+      "path": "/home",
+      "components": [
+        {
+          "type": "List",
+          "List": {
+            "direction" : "horizontal",
+            "itemsSelector": "items",
+            "title": "{snippet.title}",
+            "poster": "https://i.ytimg.com/vi/{snippet.resourceId.videoId}/maxresdefault.jpg",
+            "gridRatio": "1",
+            "itemsUrl": "https://www.googleapis.com/youtube/v3/playlistItems?key=AIzaSyDDBCXGpHKwKWiBBNSc-PN6tkuKj_3roPE&part=snippet%2CcontentDetails&maxResults=25&playlistId=PL19ohT5PbRowHisVkffh8TsyyqRHpJvN6"
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'dart:convert';
 
-import 'package:dlxtv/models/AppModel.dart';
+// import 'package:dlxtv/models/AppModel.dart';
 import 'package:dlxtv/components/BuildApp.dart';
+import 'package:dlxtv/utils/theme.dart';
 
 class PageSplash extends StatefulWidget {
   @override
@@ -16,6 +17,7 @@ class _PageSplashState extends State<PageSplash> {
 
   @override
   Widget build(BuildContext context) {
+    print('----\ Build Splash /----');
     return FutureBuilder(
       future: getConfig(context),
       builder: (BuildContext context, AsyncSnapshot snap) {
@@ -25,7 +27,15 @@ class _PageSplashState extends State<PageSplash> {
             // print(snap.data);
             var config = jsonDecode(snap.data.toString());
             // return AppModel.fromJson(context, config);
-            return BuildApp(appJson: config,);
+            return MaterialApp(
+              debugShowCheckedModeBanner: false,
+              theme: darkTheme,
+              home: Scaffold( 
+                body: BuildApp(
+                appJson: config,
+              ),
+              )
+            );
           }
         }
 

@@ -3,7 +3,22 @@ import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
 
+import 'dart:ui' as ui show Codec;
+import 'dart:typed_data';
+import 'package:flutter/foundation.dart';
+
+import 'dart:io';
+// import 'package:flutter/painting.dart';
+
 class Utils {
+  static Future<bool> loadImage(url) async {
+    return http.get(url).then((res) {
+      if (res.statusCode == 200) {
+        return true;
+      }
+    });
+  }
+
   static Future<List> jsonFetchList(String url, [String itemsSelector]) async {
     var res = await http.get(url);
     var resBody = json.decode(res.body);
@@ -110,10 +125,10 @@ class Utils {
           // Check if the key exist
           if (_item.data.containsKey(nestedKeys[0])) {
             _matchGroup1 = _item.data[nestedKeys[0]];
-            if(_matchGroup1 == null){
-            _processed = _input;  
-            }else{
-            _processed = _input.replaceAll(_matchGroup0, _matchGroup1);
+            if (_matchGroup1 == null) {
+              _processed = _input;
+            } else {
+              _processed = _input.replaceAll(_matchGroup0, _matchGroup1);
             }
           } else {
             _processed = _input;
