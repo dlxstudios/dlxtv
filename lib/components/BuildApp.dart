@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:dlxtv/models/BuildPage.dart';
 // import 'package:dlxtv/pages/pageGrid.dart';
-import 'package:device_info/device_info.dart'; 
+import 'package:device_info/device_info.dart';
 
 class BuildApp extends StatefulWidget {
   String title;
@@ -16,20 +16,19 @@ class BuildApp extends StatefulWidget {
 }
 
 class _BuildAppState extends State<BuildApp> {
+  static final DeviceInfoPlugin deviceInfoPlugin = DeviceInfoPlugin();
   static const int kTabletBreakpoint = 600;
   String title;
   Widget home;
   Map<String, dynamic> appJson;
   Map<String, BuildPage> routes = {};
-  String _selectedItem = '/home1';
+  String _selectedItem = '/home';
   // BuildPage _selectedPage;
-  
+
   _BuildAppState({Key key, this.title, this.home, this.appJson, routes});
 
-  _BuildAppState.fromJson( Map<String, dynamic> appJson) {
-
-    if (appJson.containsKey('title'))
-      title = appJson["title"] ?? "App title";
+  _BuildAppState.fromJson(Map<String, dynamic> appJson) {
+    if (appJson.containsKey('title')) title = appJson["title"] ?? "App title";
 
     if (appJson.containsKey('routes')) {
       // Get the all the routes
@@ -46,20 +45,45 @@ class _BuildAppState extends State<BuildApp> {
     }
   }
 
-  Widget _buildMobileLayout() {
-    return MenuList(
-      routes: routes,
-      itemSelectedCallback: (item) {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (BuildContext context) {
-              return item;
-            },
-          ),
-        );
-      },
+  Widget _drawer() {
+    return Material(
+      child: MenuList(
+        routes: routes,
+        itemSelectedCallback: (item) {
+          print(this);
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              maintainState: false,
+              builder: (BuildContext context) {
+                return Scaffold(
+                  drawer: _drawer(),
+                  appBar: AppBar(
+                    centerTitle: true,
+                    title: Text(item.title),
+                  ),
+                  body: SafeArea(
+                    child: item,
+                  ),
+                );
+                // return item;
+              },
+            ),
+          );
+        },
+      ),
     );
+  }
+
+  Widget _buildMobileLayout() {
+    return Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.amber,
+          primary: true,
+          title: Text(routes[_selectedItem].title),
+        ),
+        body: routes[_selectedItem],
+        drawer: _drawer());
   }
 
   Widget _buildTabletLayout() {
@@ -84,24 +108,33 @@ class _BuildAppState extends State<BuildApp> {
         Flexible(
             flex: 8,
             // child: _selectedPage,
-            child: Material(
-                elevation: 30.0,
-                shape: BeveledRectangleBorder(
-                  borderRadius:
-                      BorderRadius.only(topLeft: Radius.circular(46.0)),
-                ),
-                child: Padding(
-                  padding: EdgeInsets.only(top: 46.0),
-                  child: Container(
-                    child: routes.containsKey(_selectedItem)
-                        ? routes[_selectedItem]
-                        : Container(
-                            child: Center(
-                              child: Text('No route found'),
-                            ),
-                          ),
-                  ),
-                )))
+            child: Padding(
+              padding: EdgeInsets.symmetric(vertical: 20.0),
+              child: Material(
+                  elevation: 4.0,
+                  color: Colors.amber,
+                  // shape: BeveledRectangleBorder(
+                  //   borderRadius:
+                  //       BorderRadius.only(topLeft: Radius.circular(46.0)),
+                  // ),
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(10.0),
+                      bottomLeft: Radius.circular(10.0)),
+                  clipBehavior: Clip.antiAlias,
+                  child: Padding(
+                      padding: EdgeInsets.only(
+                          top: 0.0, left: 0.0, right: 0.0, bottom: 0.0),
+                      child: Container(
+                        child: routes.containsKey(_selectedItem)
+                            ? routes[_selectedItem]
+                            : Container(
+                                child: Center(
+                                  child:
+                                      Text('No route found : $_selectedItem'),
+                                ),
+                              ),
+                      ))),
+            ))
       ],
     );
   }
@@ -109,16 +142,19 @@ class _BuildAppState extends State<BuildApp> {
   @override
   Widget build(BuildContext context) {
     print('## Build APP ##');
-
+    // print(MediaQuery.of(context).devicePixelRatio);
+    // print(MediaQuery.of(context).size.longestSide);
     // if (widget.appJson != null) {
     //   fromJson();
     // }
 
-    print('_selectedItem');
-    print(_selectedItem);
+    // print('_selectedItem');
+    // print(_selectedItem);
 
     Widget content;
-    var shortestSide = MediaQuery.of(context).size.shortestSide;
+    var shortestSide = MediaQuery.of(context).size.longestSide /
+        MediaQuery.of(context).devicePixelRatio;
+    // var shortestSide = MediaQuery.of(context).size.shortestSide;
     // var shortestSide = 700.0;
 
     if (shortestSide < kTabletBreakpoint) {
@@ -170,18 +206,17 @@ class MenuList extends StatelessWidget {
 
     List<Widget> tiles = [];
 
-    tiles.add(
-      DrawerHeader(
-        child: Container(
-          height: 30,
-          child: Image(
-            image: AssetImage('assets/mario.png'),
-            fit: BoxFit.contain,
-          ),
-        ),
-      ),
-    );
-
+    // tiles.add(
+    //   DrawerHeader(
+    //     child: Container(
+    //       height: 30,
+    //       child: Image(
+    //         image: AssetImage('assets/mario.png'),
+    //         fit: BoxFit.contain,
+    //       ),
+    //     ),
+    //   ),
+    // );
 
     routes.forEach((path, page) {
       tiles.add(ListTile(
@@ -191,9 +226,30 @@ class MenuList extends StatelessWidget {
       ));
     });
 
-    return ListView(
-      children: tiles,
-    );
+    return Container(
+        // constraints: BoxConstraints(maxHeight: 450.0, minHeight: 150.0),
+        // alignment: Alignment.center,
+        // color: Colors.amber,
+        width: 250.0,
+        child: Column(
+          children: <Widget>[
+            Flexible(
+              child: DrawerHeader(
+                child: Container(
+                  height: 30,
+                  child: Image(
+                    image: AssetImage('assets/mario.png'),
+                    fit: BoxFit.contain,
+                  ),
+                ),
+              ),
+            ),
+            Flexible(
+              child: ListView(
+                children: tiles,
+              ),
+            )
+          ],
+        ));
   }
 }
-

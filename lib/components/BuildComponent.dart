@@ -22,7 +22,6 @@ class BuildComponent extends StatelessWidget {
         case "List":
         // Build MediaGrid Widget
         // print('compJson');
-        // print(compJson);
         return BuildList.fromJson(compJson);
         break;
 

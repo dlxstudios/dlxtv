@@ -20,6 +20,7 @@ class Utils {
   }
 
   static Future<List> jsonFetchList(String url, [String itemsSelector]) async {
+
     var res = await http.get(url);
     var resBody = json.decode(res.body);
 

@@ -17,8 +17,10 @@ class BuildGrid extends StatelessWidget {
   String itemsSelector;
   String titleVar;
   String posterVar;
+  int mobileCount = 2;
+  int tabletCount = 4;
   double gridRatio = 1.0;
-  
+
   _poster(String src) {
     return FadeInImage(
         image: new NetworkImage(src),
@@ -52,12 +54,28 @@ class BuildGrid extends StatelessWidget {
         // print('gridRatio '+mg['gridRatio']);
         gridRatio = double.parse(mg['gridRatio'] ?? 1.0);
       }
+
+      if (mg.containsKey('mobileCount')) {
+        // print('gridRatio '+mg['gridRatio']);
+        mobileCount = int.parse(mg['mobileCount'] ?? 1.0);
+      }
+       if (mg.containsKey('tabletCount')) {
+        // print('gridRatio '+mg['gridRatio']);
+        tabletCount = int.parse(mg['tabletCount'] ?? 1.0);
+      }
     }
   }
 
   @override
   Widget build(BuildContext context) {
     print('** BuildGrid Build : ');
+    int width = (MediaQuery.of(context).size.longestSide /
+            MediaQuery.of(context).devicePixelRatio)
+        .floor();
+    int gridCrossAxisCount = (width / 130).floor();
+    print('gridCrossAxisCount : $gridCrossAxisCount');
+    int gridCount = width > 600 ? tabletCount : mobileCount;
+    var test = true;
 
     return FutureBuilder(
         future: Utils.jsonFetchList(itemsUrl, itemsSelector),
@@ -71,23 +89,73 @@ class BuildGrid extends StatelessWidget {
                   // Mobile
                   // left: 16.0, top: 16.0, bottom: 16.0, right: 16.0),
                   // TV 720p
-                  left: 8.0,
-                  top: 16.0,
-                  bottom: 0.0,
-                  right: 8.0),
+                  left: 24.0,
+                  top: 8.0,
+                  bottom: 24.0,
+                  right: 24.0),
               sliver: SliverGrid.count(
-                crossAxisCount: 2,
+                crossAxisCount: gridCount,
                 // TV 720p
                 crossAxisSpacing: 20.0,
                 // mainAxisSpacing: 8.0,
                 // Mobile
                 // crossAxisSpacing: 28.0,
-                // mainAxisSpacing: 16.0,
+                mainAxisSpacing: 20.0,
                 childAspectRatio: gridRatio,
                 children: items.map(
                   (_item) {
                     String poster = Utils.stringVarMap(posterVar, _item);
-                    // String title = Utils.stringVarMap(titleVar, _item);
+                    String title = Utils.stringVarMap(titleVar, _item);
+
+                    if (test) {
+                      return Material(
+                          borderRadius: BorderRadius.all(Radius.circular(8.0)),
+                          clipBehavior: Clip.antiAlias,
+                          child: Stack(
+                            children: <Widget>[
+                              Container(
+                                child: Column(
+                                  children: <Widget>[
+                                    Flexible(
+                                      flex: 10,
+                                      child: SizedBox.expand(),
+                                    ),
+                                    Flexible(
+                                      flex: 2,
+                                      child: GridTileBar(
+                                        title: Text(
+                                          title,
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .caption,
+                                        ),
+                                        backgroundColor: Colors.black45,
+                                        // trailing: Icon(Icons.add_circle_outline),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                                decoration: BoxDecoration(
+                                  color: Colors.white10,
+                                  image: DecorationImage(
+                                    image: NetworkImage(poster),
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              ),
+                              Positioned.fill(
+                                  child: Material(
+                                color: Colors.transparent,
+                                child: InkWell(
+                                  // child: Text('data'),
+                                  onTap: () {},
+                                ),
+                              ))
+                            ],
+                          ));
+                    }
 
                     return Stack(children: [
                       Material(
@@ -95,23 +163,25 @@ class BuildGrid extends StatelessWidget {
                           borderRadius: BorderRadius.all(Radius.circular(10.0)),
                           clipBehavior: Clip.antiAlias,
                           child: GridTile(
-                            // footer: GridTileBar(
-                            //   title: Text(
-                            //     title,
-                            //     maxLines: 2,
-                            //     overflow: TextOverflow.ellipsis,
-                            //   ),
-                            //   backgroundColor: Colors.black45,
-                            //   // trailing: Icon(Icons.add_circle_outline),
-                            // ),
+                            footer: GridTileBar(
+                              title: Text(
+                                title,
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                                style: Theme.of(context).textTheme.title,
+                              ),
+                              backgroundColor: Colors.black45,
+                              // trailing: Icon(Icons.add_circle_outline),
+                            ),
 
                             // child: Image.asset(ImageAssets.posterPlaceholder),
                             child: Stack(children: [
                               // _poster(poster),
-                              FadeInImage(
-                                  image: new NetworkImage(poster),
-                                  placeholder: new AssetImage(
-                                      ImageAssets.posterPlaceholder)),
+                              // FadeInImage(
+                              //     image: new NetworkImage(poster),
+                              //     placeholder: new AssetImage(
+                              //         ImageAssets.transparentImage)),
+                              Image(image: NetworkImage(poster)),
                               Positioned.fill(
                                   child: Material(
                                 color: Colors.transparent,

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:convert';
 
-// import 'package:dlxtv/models/AppModel.dart';
 import 'package:dlxtv/components/BuildApp.dart';
 import 'package:dlxtv/utils/theme.dart';
 
@@ -28,14 +27,12 @@ class _PageSplashState extends State<PageSplash> {
             var config = jsonDecode(snap.data.toString());
             // return AppModel.fromJson(context, config);
             return MaterialApp(
-              debugShowCheckedModeBanner: false,
-              theme: darkTheme,
-              home: Scaffold( 
-                body: BuildApp(
-                appJson: config,
-              ),
-              )
-            );
+                debugShowCheckedModeBanner: false,
+                theme: darkTheme,
+                home: Scaffold(
+                    body:  BuildApp(
+                  appJson: config,
+                )));
           }
         }
 
@@ -48,16 +45,4 @@ class _PageSplashState extends State<PageSplash> {
       },
     );
   }
-
-  // @override
-  // Widget build(BuildContext context) {
-
-  //   getAPI(context);
-
-  //   return Container(
-  //     child: Image(
-  //       image: AssetImage('assets/mario.png'),
-  //     ),
-  //   );
-  // }
 }

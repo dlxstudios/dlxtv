@@ -23,11 +23,7 @@ class _BuildAppState extends State<BuildApp> {
   String _title = "App";
   String get title => _title;
 
-  Widget _home = Container(
-    child: Center(
-      child: Text('No Application config found'),
-    ),
-  );
+
   Widget _selectedPage;
 
   Map<String, dynamic> appJson;
@@ -47,7 +43,7 @@ class _BuildAppState extends State<BuildApp> {
       BuildPage page = BuildPage.fromJson(appJson["routes"][i]);
 
       if (page.path == "/home") {
-        _home = page;
+  
         _selectedPage = page;
       }
       // Add page to routes Map
