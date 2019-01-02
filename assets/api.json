@@ -28,7 +28,7 @@
     },
     {
       "title": "Popular",
-      "path": "/homeP",
+      "path": "/home",
       "components": [
         {
           "type": "PageHeader",
@@ -37,6 +37,18 @@
             "backgroundColor": "green"
           }
         },
+
+        {
+          "type": "List",
+          "List": {
+            "direction": "horizontal",
+            "itemsUrl": "http://api.themoviedb.org/3/movie/popular?api_key=130979ed329ff88f27bae32b141082fb",
+            "itemsSelector": "results",
+            "poster": "https://image.tmdb.org/t/p/original{poster_path}",
+            "title": "{title}"
+          }
+        },
+
         {
           "type": "MediaGrid",
           "MediaGrid": {
@@ -76,7 +88,7 @@
     },
     {
       "title": "YTube",
-      "path": "/home",
+      "path": "/YT",
       "components": [
         {
           "type": "List",

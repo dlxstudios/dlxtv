@@ -78,7 +78,7 @@ class _BuildAppState extends State<BuildApp> {
   Widget _buildMobileLayout() {
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.amber,
+          backgroundColor: Colors.deepOrangeAccent,
           primary: true,
           title: Text(routes[_selectedItem].title),
         ),
@@ -112,7 +112,7 @@ class _BuildAppState extends State<BuildApp> {
               padding: EdgeInsets.symmetric(vertical: 20.0),
               child: Material(
                   elevation: 4.0,
-                  color: Colors.amber,
+                  color: Colors.deepPurple,
                   // shape: BeveledRectangleBorder(
                   //   borderRadius:
                   //       BorderRadius.only(topLeft: Radius.circular(46.0)),

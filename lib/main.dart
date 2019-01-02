@@ -9,8 +9,8 @@ import 'pages/PageSplash.dart';
 void main() => runApp(new TVApp());
 
 class TVApp extends StatelessWidget {
-  dynamic config = "";
-  List items;
+  // dynamic config = "";
+  // List items;
 
   // Widget getAPI(BuildContext context) {
 
